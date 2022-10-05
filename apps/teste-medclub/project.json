@@ -1,0 +1,60 @@
+{
+  "name": "teste-medclub",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/teste-medclub/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/teste-medclub",
+        "main": "apps/teste-medclub/src/main.ts",
+        "tsConfig": "apps/teste-medclub/tsconfig.app.json",
+        "assets": ["apps/teste-medclub/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/teste-medclub/src/environments/environment.ts",
+              "with": "apps/teste-medclub/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "teste-medclub:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "teste-medclub:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/teste-medclub/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/teste-medclub"],
+      "options": {
+        "jestConfig": "apps/teste-medclub/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
