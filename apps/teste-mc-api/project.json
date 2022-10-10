@@ -1,7 +1,7 @@
 {
-  "name": "teste-medclub",
+  "name": "teste-mc-api",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/teste-medclub/src",
+  "sourceRoot": "apps/teste-mc-api/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,10 +10,10 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/teste-medclub",
-        "main": "apps/teste-medclub/src/main.ts",
-        "tsConfig": "apps/teste-medclub/tsconfig.app.json",
-        "assets": ["apps/teste-medclub/src/assets"]
+        "outputPath": "dist/apps/teste-mc-api",
+        "main": "apps/teste-mc-api/src/main.ts",
+        "tsConfig": "apps/teste-mc-api/tsconfig.app.json",
+        "assets": ["apps/teste-mc-api/src/assets"]
       },
       "configurations": {
         "production": {
@@ -22,8 +22,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/teste-medclub/src/environments/environment.ts",
-              "with": "apps/teste-medclub/src/environments/environment.prod.ts"
+              "replace": "apps/teste-mc-api/src/environments/environment.ts",
+              "with": "apps/teste-mc-api/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -32,11 +32,11 @@
     "serve": {
       "executor": "@nrwl/js:node",
       "options": {
-        "buildTarget": "teste-medclub:build"
+        "buildTarget": "teste-mc-api:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "teste-medclub:build:production"
+          "buildTarget": "teste-mc-api:build:production"
         }
       }
     },
@@ -44,14 +44,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/teste-medclub/**/*.ts"]
+        "lintFilePatterns": ["apps/teste-mc-api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/teste-medclub"],
+      "outputs": ["coverage/apps/teste-mc-api"],
       "options": {
-        "jestConfig": "apps/teste-medclub/jest.config.ts",
+        "jestConfig": "apps/teste-mc-api/jest.config.ts",
         "passWithNoTests": true
       }
     }
