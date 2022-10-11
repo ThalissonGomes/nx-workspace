@@ -1,8 +1,15 @@
 {
   "cSpell.words": [
+    "Ação",
+    "Atualizar",
+    "Buscar",
+    "Clube",
     "Edite",
     "encontrada",
     "encontrado",
+    "excluir",
+    "Exemple",
+    "Listar",
     "medclub",
     "nestjs",
     "noreferrer",
@@ -10,11 +17,13 @@
     "Pessoa",
     "pessoas",
     "recarregar",
+    "Tabela",
     "teste",
     "testemcdb",
     "todos",
     "typeorm",
     "Usuário"
   ],
-  "cSpell.enableFiletypes": ["typescript"]
+  "cSpell.enableFiletypes": ["typescript"],
+  "html.format.wrapLineLength": 200
 }

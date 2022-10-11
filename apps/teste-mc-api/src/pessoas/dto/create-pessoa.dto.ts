@@ -1,12 +1,4 @@
-import {
-  IsDate,
-  IsEmail,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  Length,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreatePessoaDto {
   @IsNotEmpty()
@@ -17,9 +9,9 @@ export class CreatePessoaDto {
   @IsEmail()
   email: string;
 
-  @IsNotEmpty()
+  // @IsMobilePhone('pt-BR')
   @IsString()
-  number: string;
+  phoneNumber: string;
 
   // @IsNotEmpty()
   // @IsDate()

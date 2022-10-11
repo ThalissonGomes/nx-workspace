@@ -36,6 +36,18 @@ export class PessoasService {
     }
   }
 
+  async findOneByEmail(email: string) {
+    try {
+      const pessoas = await this.pessoaRepository.findOneBy({ email });
+      if (!pessoas) {
+        throw new BadRequestException('Pessoa não encontrada');
+      }
+      return pessoas;
+    } catch (error) {
+      return new InternalServerErrorException(error.message);
+    }
+  }
+
   async create(createPessoaDto: CreatePessoaDto) {
     try {
       await this.pessoaRepository.save(createPessoaDto);

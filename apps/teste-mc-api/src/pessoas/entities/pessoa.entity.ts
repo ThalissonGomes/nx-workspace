@@ -9,7 +9,5 @@ export class Pessoa {
   @Column()
   email: string;
   @Column()
-  number: string;
-  // @Column()
-  // birthDate: Date;
+  phoneNumber: string;
 }
