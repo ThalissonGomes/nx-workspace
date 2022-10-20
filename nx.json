@@ -39,7 +39,7 @@
     ],
     "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
   },
-  "defaultProject": "teste-medclub",
+  "defaultProject": "teste-mc-api",
   "generators": {
     "@nrwl/react": {
       "application": {
