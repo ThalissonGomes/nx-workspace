@@ -2,11 +2,10 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 
-import { AppModule } from './app/app.module';
+import { AuthAppModule } from './app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'auth';
+  const app = await NestFactory.create(AuthAppModule);
   const port = process.env.PORT || 4444;
 
   app.connectMicroservice(
@@ -15,18 +14,14 @@ async function bootstrap() {
       options: {
         servers: ['nats://localhost:4222'],
       },
-    },
-    { inheritAppConfig: true }
+    }
+    // { inheritAppConfig: true }
   );
-
-  app.setGlobalPrefix(globalPrefix);
 
   await app.startAllMicroservices();
   await app.listen(port);
 
-  Logger.log(
-    `🚀 Aplicação "auth-ms" rodando em: http://localhost:${port}/${globalPrefix}`
-  );
+  Logger.log(`🚀 Aplicação "auth-ms" rodando em: http://localhost:${port}`);
 }
 
 bootstrap();

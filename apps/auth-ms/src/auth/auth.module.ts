@@ -1,13 +1,13 @@
-import { JwtModule } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from '../outros/jwt.strategy';
-import { LocalStrategy } from '../outros/local.strategy';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ClientsModule.register([
       {
         name: 'USUARIO_MS',
@@ -17,12 +17,10 @@ import { LocalStrategy } from '../outros/local.strategy';
         },
       },
     ]),
-    JwtModule.register({
-      secret: 'segredoTesteMedClub',
-      signOptions: { expiresIn: '60s' },
-    }),
+    PassportModule,
   ],
+  providers: [AuthService],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}

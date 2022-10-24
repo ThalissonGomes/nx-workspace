@@ -15,8 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@medclub-workspace/api-access": ["libs/api-access/src/index.ts"],
-      "@medclub-workspace/interfaces": ["libs/interfaces/src/index.ts"]
+      "@medclub-workspace/regex": ["libs/regex.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

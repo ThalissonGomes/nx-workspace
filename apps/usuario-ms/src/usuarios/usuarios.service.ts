@@ -1,8 +1,9 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import CreateUsuarioDto from './create-usuario.dto';
-import { Usuario } from './usuarios.entity';
+import { FindOptionsWhere, Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-usuario.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { Usuario } from './entities/usuarios.entity';
 
 @Injectable()
 export class UsuariosService {
@@ -12,45 +13,36 @@ export class UsuariosService {
   ) {}
 
   // CREATE
-  async createUser(usuarioDto: CreateUsuarioDto) {
-    try {
-      const newUser = this.userRepo.create(usuarioDto);
-      const res = await this.userRepo.save(newUser);
-      return res;
-    } catch (e) {
-      Logger.log(e);
-      throw e;
-    }
+  async create(usuarioDto: CreateUserDto) {
+    const newUser = this.userRepo.create(usuarioDto);
+    return await this.userRepo.save(newUser);
   }
-  // GET ONE
-  async getAll() {
-    return this.userRepo.find();
-  }
-  // GET BY USERNAME
-  async getByUsername(username: string) {
-    const user = await this.userRepo.findOneBy({ username });
-    if (user) {
-      return user;
-    }
-    throw new HttpException(
-      `Usuário com Username: ${username} não encontrado.`,
-      HttpStatus.NOT_FOUND
-    );
-  }
-  //GET BY EMAIL
-  async getByEmail(email: string) {
-    const user = await this.userRepo.findOneBy({ email });
-    if (user) {
-      return user;
-    }
-    throw new HttpException(
-      `Usuário com Email: ${email} não encontrado.`,
-      HttpStatus.NOT_FOUND
-    );
+  // FIND ALL
+  async findAll() {
+    return this.userRepo.find({
+      select: ['id', 'name', 'username', 'email'],
+    });
   }
 
-  async delete(id: number) {
-    const u = await this.userRepo.findOneBy({ id });
-    this.userRepo.remove(u);
+  // FIND ONE BY OR FAIL
+  async findOneByOrFail(where: FindOptionsWhere<Usuario>) {
+    try {
+      return await this.userRepo.findOneByOrFail(where);
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
+  //UPDATE User
+  async update(id: string, data: UpdateUserDto) {
+    const u = await this.findOneByOrFail({ id });
+    this.userRepo.merge(u, data);
+    return await this.userRepo.save(u);
+  }
+
+  // DELETE User
+  async delete(id: string) {
+    await this.findOneByOrFail({ id });
+    this.userRepo.softDelete({ id });
   }
 }
