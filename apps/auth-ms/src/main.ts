@@ -18,6 +18,9 @@ async function bootstrap() {
     // { inheritAppConfig: true }
   );
 
+  //Enable Cors
+  app.enableCors();
+
   await app.startAllMicroservices();
   await app.listen(port);
 

@@ -18,22 +18,22 @@ import CreateUserDto from './dto/create-usuario.dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 export class AuthController {
   constructor(private readonly aS: AuthService) {}
 
   // CREATE
-  @Post('create')
+  @Post()
   async create(@Body() u: CreateUserDto) {
     return this.aS.create(u);
   }
   // FIND ALL
-  @Get('findAll')
+  @Get()
   async findAll() {
     return this.aS.findAll();
   }
   //FIND BY ID
-  @Get('findById/:id')
+  @Get(':id')
   async findById(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.aS.findOneById(id);
   }
@@ -43,7 +43,7 @@ export class AuthController {
     return this.aS.findOneByUsername(username);
   }
 
-  @Put('update/:id')
+  @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() u: CreateUserDto
@@ -52,9 +52,14 @@ export class AuthController {
   }
 
   //DELETE
-  @Delete('delete/:id')
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id', new ParseUUIDPipe()) id: string) {
     this.aS.delete(id);
+  }
+  //editPage
+  @Get('edit/:id')
+  async editPage(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.aS.findOneById(id);
   }
 }
